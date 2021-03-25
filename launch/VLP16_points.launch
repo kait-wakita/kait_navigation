@@ -60,7 +60,8 @@
     <arg name="zmax_amcl" value="1.5"/>
     <arg name="zmin_planner" value="-0.8"/>
     <arg name="zmax_planner" value="0.2"/>
-    <arg name="resolution" value="$(arg laserscan_resolution)"/>
+    <!-- <arg name="resolution" value="$(arg laserscan_resolution)"/> -->
+    <arg name="resolution" value="0.01744"/>
   </include>
 
 </launch>
