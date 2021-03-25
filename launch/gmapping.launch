@@ -1,0 +1,21 @@
+<!--
+SLAM gmapping
+-->
+
+<launch>
+   <node pkg="megarover_samples" type="pub_odom" name="pub_odom" />
+
+  <include file="$(find kait_navigation)/launch/VLP16_points.launch" />
+
+  <node pkg="tf" type="static_transform_publisher" name="stp_laser" args="-0.00 0 0.0 0 0 0 base_link laser_link 100" />
+
+  <!-- gmapping -->
+  <node pkg="gmapping" type="slam_gmapping" name="mapper">
+    <param name="maxUrange" value="100.0" type="double" />
+    <param name="delta" value="0.05" />
+    <param name="linearUpdate" value="0.05">
+    <param name="angularUpdate" value="0.10">
+    <remap from="scan" to="scan_amcl" />
+  </node>
+
+</launch>
