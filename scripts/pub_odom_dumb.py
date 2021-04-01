@@ -14,6 +14,7 @@ class PubOdom():
     def __init__(self):
         self.last_time = rospy.Time.now()
         
+        self.sub_cmd_vel = rospy.Subscriber('cmd_vel', Twist, self.callback_cmd_vel)
         self.pub_odom = rospy.Publisher('odom', Odometry, queue_size=10)
         self.bc_odom = tf.TransformBroadcaster()
 
