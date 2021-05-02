@@ -3,8 +3,8 @@
 -->
 
 <launch>
-  <include file="$(find kait_navigation)/launch/amcl.launch" />
-
+  <arg name="map_file" default="$(find kait_navigation)/maps/kait_cp1.yaml"/>
+  <include file="$(find kait_navigation)/launch/amcl.launch" pass_all_args="true" />
  
   <!--- 経路計画，指令値生成ノード　move_base -->
   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" >
