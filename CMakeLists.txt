@@ -143,6 +143,7 @@ include_directories(
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/kait_navigation_node.cpp)
 add_executable(mega_pub_odom1 src/pub_odom.cpp)
+add_executable(mecanum_pub_odom1 src/pub_odom_mecanum.cpp)
 
 
 ## Rename C++ executable without prefix
@@ -162,9 +163,16 @@ add_executable(mega_pub_odom1 src/pub_odom.cpp)
 target_link_libraries(mega_pub_odom1
   ${catkin_LIBRARIES}
 )
+target_link_libraries(mecanum_pub_odom1
+  ${catkin_LIBRARIES}
+)
 
 set_target_properties(mega_pub_odom1
                       PROPERTIES OUTPUT_NAME pub_odom
+                      PREFIX "")
+
+set_target_properties(mecanum_pub_odom1
+                      PROPERTIES OUTPUT_NAME pub_odom_mecanum
                       PREFIX "")
 
 

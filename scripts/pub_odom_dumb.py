@@ -19,7 +19,7 @@ class PubOdom():
         self.bc_odom = tf.TransformBroadcaster()
 
         self.x, self.y, self.th = 0.0, 0.0, 0.0
-        self.vx, self.vth = 0.0, 0.0
+        self.vx, self.vy, self.vth = 0.0, 0.0, 0.0
 
         self.cur_time = rospy.Time.now()
         self.last_time = self.cur_time
@@ -27,6 +27,7 @@ class PubOdom():
         
     def callback_cmd_vel(self,message):
         self.vx = message.linear.x
+        self.vy = message.linear.y
         self.vth = message.angular.z
         self.last_time = rospy.Time.now()
 
@@ -51,7 +52,7 @@ class PubOdom():
         odom.pose.pose.orientation = Quaternion(*q)
 
         odom.twist.twist.linear.x = self.vx
-        odom.twist.twist.linear.y = 0.0
+        odom.twist.twist.linear.y = self.vy
         odom.twist.twist.angular.z = self.vth
 
         self.pub_odom.publish(odom)

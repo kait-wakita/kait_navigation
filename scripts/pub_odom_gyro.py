@@ -18,7 +18,7 @@ class PubOdomGyro():
         self.bc_odom = tf.TransformBroadcaster()
 
         self.x, self.y, self.th = 0.0, 0.0, 0.0
-        self.vx, self.vth = 0.0, 0.0
+        self.vx, self.vy, self.vth = 0.0, 0.0, 0.0
         self.gyro_z, self.gyro_th = 0.0, 0.0
         self.th_last = 0.0
 
@@ -28,6 +28,7 @@ class PubOdomGyro():
         
     def callback_cmd_vel(self,message):
         self.vx = message.linear.x
+        self.vy = message.linear.y
         self.vth = message.angular.z
 
 
@@ -57,7 +58,7 @@ class PubOdomGyro():
         odom.pose.pose.orientation = Quaternion(*q)
 
         odom.twist.twist.linear.x = self.vx
-        odom.twist.twist.linear.y = 0.0
+        odom.twist.twist.linear.y = self.vy
         odom.twist.twist.angular.z = (self.th-self.th_last)/dt
 
         self.pub_odom.publish(odom)
