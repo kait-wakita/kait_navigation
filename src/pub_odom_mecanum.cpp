@@ -23,7 +23,7 @@ int main(int argc, char** argv){
 
   ros::NodeHandle n;
   ros::Publisher  odom_pub = n.advertise<nav_msgs::Odometry>("odom", 50);
-  ros::Subscriber odom_sub = n.subscribe("/mecanum_odo", 100, mecanumOdomCallback);
+  ros::Subscriber odom_sub = n.subscribe("/mecanum_odom", 100, mecanumOdomCallback);
   tf::TransformBroadcaster odom_broadcaster;
 
   //get params
