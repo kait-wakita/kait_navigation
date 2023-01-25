@@ -1,0 +1,68 @@
+<!-- 
+  AMCL pedestrian
+-->
+
+<launch>
+
+  <machine name="pedestrian1" address="192.168.1.190" env-loader="~/catkin_ws/env.bash" user="jetson" password="wakita121"/>
+  <node machine="pedestrian1" pkg="kait_navigation" type="pub_odom" name="pub_odom" />
+  <node machine="pedestrian1" pkg="tf" type="static_transform_publisher" name="stp_laser" args="-0.20 0 0 0 0 0 base_link laser 1" />
+
+  <!-- mapサーバー -->
+  <arg name="map_file" default="$(find kait_navigation)/maps/kait_cp1.yaml"/>
+  <node machine="pedestrian1" name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
+  <!-- LRFのデバイスドライバノード -->
+  <node machine="pedestrian1" name="horizontal_laser" pkg="urg_node"
+    type="urg_node" >
+    <param name="serial_port" value="/dev/ttyACM0" />　<!-- デバイスドライバファイルのパス -->
+    <param name="frame_id" value="laser" />
+    <!--param name="angle_min" value="-1.57" /-->　<!-- LRFの有効検出角度（下限） -->
+    <!--param name="angle_max" value="1.57" /-->  <!-- LRFの有効検出角度（上限） -->
+  </node>
+
+  <!--pedestrian1-->
+  <group ns="pedestrian1">
+    <!--tf_prefix-->
+    <param name="tf_prefix" value="pedestrian1" />
+      <!-- 
+      自己位置推定ノード amcl
+      -->
+      <!--<include file="$(find amcl)/examples/amcl_diff.launch" />-->
+      <node machine="pedestrian1" pkg="amcl" type="amcl" name="amcl" output="screen" args="/scan:=/scan">
+　　　　  <param name="gui_publish_rate" value="5.0"/>
+      <param name="odom_model_type" value="diff"/>
+      <param name="min_particles" value="500"/>
+      <param name="max_particles" value="2000"/>
+      <param name="kld_err" value="0.05"/>
+      <param name="kld_z" value="0.95"/>
+      <param name="odom_alpha1" value="0.2"/>		
+      <param name="odom_alpha2" value="0.2"/>
+      <param name="odom_alpha3" value="0.2"/>
+      <param name="odom_alpha4" value="5.0"/>
+      <param name="laser_max_beams" value="60"/>
+      <param name="laser_z_hit" value="0.95"/>
+      <param name="laser_z_short" value="0.05"/>
+      <param name="laser_z_max" value="0.05"/>
+      <param name="laser_z_rand" value="0.05"/>
+      <param name="laser_sigma_hit" value="0.2"/>
+      <param name="laser_lambda_short" value="0.1"/>
+      <param name="laser_lambda_short" value="0.1"/>
+      <param name="laser_model_type" value="likelihood_field"/>
+      <!-- <param name="laser_model_type" value="beam"/> -->
+      <param name="laser_likelihood_max_dist" value="2.0"/>
+      <param name="update_min_d" value="0.05"/>
+      <param name="update_min_a" value="0.03"/>
+      <param name="odom_frame_id" value="odom"/>
+      <param name="base_frame_id" value="base_link" />
+      <param name="resample_interval" value="1"/>
+      <param name="transform_tolerance" value="0.2"/>
+      <param name="recovery_alpha_slow" value="0.001"/>
+      <param name="recovery_alpha_fast" value="0.01"/>
+      <param name="use_map_topic" value="false" />
+    </node>
+  </group>
+
+</launch>
+
+

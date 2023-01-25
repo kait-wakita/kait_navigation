@@ -1,0 +1,8 @@
+<launch>
+  <machine name="pedestrian1" address="192.168.1.190" env-loader="~/catkin_ws/env.bash" user="jetson" password="wakita121"/>
+
+ <!-- Rviz -->
+  <node pkg="rviz" type="rviz" args="-d '$(find kait_navigation)/rviz/urg_amcl.rviz'" name="visualizer" respawn="true" />
+  <node machine="pedestrian1" name="keyboard_cmd_vel" pkg="wru" type="keycntl.py" />
+</launch>
+

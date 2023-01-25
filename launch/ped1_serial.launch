@@ -1,0 +1,11 @@
+<launch>
+  <machine name="pedestrian1" address="10.20.171.190" env-loader="~/catkin_ws/env.bash" user="jetson" password="wakita121"/>
+  <!--machine name="pedestrian2" address="192.168.1.191" env-loader="~/catkin_ws/env.bash" user="jetson" password="wakita121"/-->
+
+ <!--cmd_vel -->
+  <group  ns = "pedestrian1" >
+    <node machine="pedestrian1" name="ros_setup" pkg="kait_navigation" type="ros_serial.sh"/>
+  </group>
+
+</launch>
+

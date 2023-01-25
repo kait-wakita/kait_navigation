@@ -56,10 +56,10 @@
   <include file="$(find velodyne_pointcloud)/launch/laserscan_nodelet.launch">
     <arg name="manager" value="$(arg manager)" />
     <arg name="ring" value="-1"/>
-    <arg name="zmin_amcl" value="0.5"/>
-    <arg name="zmax_amcl" value="1.5"/>
-    <arg name="zmin_planner" value="0.4"/>
-    <arg name="zmax_planner" value="1.2"/>
+    <arg name="zmin_amcl" value="-0.5"/>
+    <arg name="zmax_amcl" value="0.0"/>
+    <arg name="zmin_planner" value="0.3"/>
+    <arg name="zmax_planner" value="0.8"/>
     <!-- <arg name="resolution" value="$(arg laserscan_resolution)"/> -->
     <arg name="resolution" value="0.01744"/>
   </include>
